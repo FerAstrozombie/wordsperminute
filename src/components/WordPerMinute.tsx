@@ -57,7 +57,6 @@ export default function WordsPerMinute() {
         }
     }, [time])
 
-
     return (
         <div className="padre">
             {Boolean(time) && <h1 className="words">{word}</h1>}
@@ -73,7 +72,7 @@ export default function WordsPerMinute() {
                     <button type="submit">Enviar</button>
                 </form>
             ) : (
-                <button onClick={() => setTime(60)}>Play</button>
+                <button onClick={() => {setTime(60), setCharacterCount(0)}}>Play</button>
             )}
         </div>
     )
