@@ -37,6 +37,8 @@ body{
 }
 button{
   background-color: blueviolet;
+  margin-bottom: 30px;
+  cursor: pointer;
 }
 input{
   outline: none;

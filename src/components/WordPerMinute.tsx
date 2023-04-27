@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const WORDS = [
     "pokemon",
@@ -41,6 +45,22 @@ export default function WordsPerMinute() {
     const [buffer, setBuffer] = useState("");
     const [time, setTime] = useState(0);
 
+    let userStorage = sessionStorage.getItem("user");
+    function swallFire(){
+        MySwal.fire({
+            title: "Ingrese usuario",
+            input: "text",
+            })
+            .then(resultado =>{
+                if (resultado.value){
+                    let user = resultado.value
+                    sessionStorage.setItem("user", user);
+                    setTimeout(() => location.reload(), 2000)
+                }
+    })
+    }
+
+    
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (buffer === word) {
@@ -59,20 +79,33 @@ export default function WordsPerMinute() {
 
     return (
         <div className="padre">
-            {Boolean(time) && <h1 className="words">{word}</h1>}
-            <h2>Caracteres tipeadas: {characterCount}</h2>
-            <h2>Tiempo restante: {time}</h2>
+            {userStorage ? (
+                <h1>Bienvenido: {userStorage}</h1>
+            ): (
+                <>
+                    <button onClick={() => { swallFire() }}>Ingresar usuario</button>
+                </>
+            )}
             {time ? (
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        autoFocus
-                        value={buffer}
-                        onChange={(e) => setBuffer(e.target.value)} />
-                    <button type="submit">Enviar</button>
-                </form>
+                <>
+                    {Boolean(time) && <h1 className="words">{word}</h1>}
+                    <h2>Caracteres tipeadas: {characterCount}</h2>
+                    <h2>Tiempo restante: {time}</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            autoFocus
+                            value={buffer}
+                            onChange={(e) => setBuffer(e.target.value)} />
+                        <button type="submit">Enviar</button>
+                    </form>
+                </>
+
             ) : (
-                <button onClick={() => {setTime(60), setCharacterCount(0)}}>Play</button>
+                <>
+                    <button onClick={() => { setTime(65), setCharacterCount(0) }}>Play</button>
+                </>
+
             )}
         </div>
     )

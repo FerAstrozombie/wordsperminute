@@ -1,10 +1,15 @@
-import WordsPerMinute from "./components/WordPerMinute"
+import Puntuacion from "./components/Puntuaciones";
+import WordsPerMinute from "./components/WordPerMinute";
 
 function App() {
-
-
+  
   return (
-    <WordsPerMinute />
+
+    <>
+      <Puntuacion />
+      <WordsPerMinute />
+    </>
+
   )
 }
 
